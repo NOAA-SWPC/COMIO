@@ -186,12 +186,12 @@ HDF5 support is being disabled (equivalent to --with-hdf5=no).
         with_hdf5_fortran="no"
     else
         dnl Get the h5cc output
-        HDF5_SHOW=$(eval $H5CC -show)
+        HDF5_SHOW=$(eval $H5CC -show | tail -1)
 
         dnl Get the actual compiler used
-        HDF5_CC=$(eval $H5CC -show | $AWK '{print $[]1}')
+        HDF5_CC=$(eval $H5CC -show | tail -1 | $AWK '{print $[]1}')
         if test "$HDF5_CC" = "ccache"; then
-            HDF5_CC=$(eval $H5CC -show | $AWK '{print $[]2}')
+            HDF5_CC=$(eval $H5CC -show | tail -1 | $AWK '{print $[]2}')
         fi
 
         dnl h5cc provides both AM_ and non-AM_ options
@@ -279,7 +279,7 @@ HDF5 support is being disabled (equivalent to --with-hdf5=no).
                 | $AWK '{print $[]3}')
 
             dnl Again, pry any remaining -Idir/-Ldir from compiler wrapper
-            for arg in `$H5FC -show`
+            for arg in `$H5FC -show | head -1`
             do
               case "$arg" in #(
                 -I*) echo $HDF5_FFLAGS | $GREP -e "$arg" >/dev/null \
@@ -299,7 +299,7 @@ HDF5 support is being disabled (equivalent to --with-hdf5=no).
             for arg in $HDF5_LIBS
             do
               case "$arg" in #(
-                -lhdf5_hl) HDF5_FLIBS="$HDF5_FLIBS -lhdf5hl_fortran $arg"
+                -lhdf5_hl) HDF5_FLIBS="$HDF5_FLIBS -lhdf5_hl_fortran $arg"
                   ;; #(
                 -lhdf5)    HDF5_FLIBS="$HDF5_FLIBS -lhdf5_fortran $arg"
                   ;; #(
