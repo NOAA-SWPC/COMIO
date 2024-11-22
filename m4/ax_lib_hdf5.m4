@@ -232,6 +232,9 @@ HDF5 support is being disabled (equivalent to --with-hdf5=no).
             -L*) echo $HDF5_LDFLAGS | $GREP -e "$arg" 2>&1 >/dev/null \
                   || HDF5_LDFLAGS="$HDF5_LDFLAGS $arg"
               ;;
+            \'-L*) echo $HDF5_LDFLAGS | $GREP -e "$arg" 2>&1 >/dev/null \
+                  || HDF5_LDFLAGS="$HDF5_LDFLAGS $arg"
+              ;;
             -l*) echo $HDF5_LIBS | $GREP -e "$arg" 2>&1 >/dev/null \
                   || HDF5_LIBS="$HDF5_LIBS $arg"
               ;;
